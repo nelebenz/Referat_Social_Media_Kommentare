@@ -40,7 +40,7 @@ bsp_read <- readLines(bsp_url, encoding = "UTF-8")
 parsed_bsp <- htmlParse(bsp_read, encoding = "UTF-8")
 show(parsed_bsp)
 
-# funktioniert nicht, könnte an Layout der Instagram- und Twitter-Kommentarspalten liegen, wahrscheinlich aber fehlender Schritt im Code oder fehlendes package 
+# funktioniert nicht, könnte an Layout der Instagram- und Twitter-Kommentarspalten liegen
 
 # Scrapen Methode 2 ausprobieren
 # Scrapen mit package rvest und Browser-Plugin SelectorGadget 
@@ -78,7 +78,7 @@ website_bsp_2 %>%
   html_nodes("p") %>%
   html_text()
 
-# learning: funktioniert nicht bei Social-Media, aber auf Nachrichtenseiten, die es ermöglichen, die Kommentare auf einer separaten Seite zu laden, liegt also vielleicht wirklich am Layout 
+# learning: funktioniert nicht bei Social-Media, aber auf Nachrichtenseiten, die es ermöglichen, die Kommentare auf einer separaten Seite zu laden
 # also Online-Scraper nutzen (ExportComments)
 
 ```
@@ -102,7 +102,6 @@ summary(Kommentare_pro_Minute$Instagram_Kommentare)
 summary(Kommentare_pro_Minute$Twitter_Kommentare)
 
 # graphische Darstellungen ausprobieren 
-# density plots 
 plot(density(Kommentare_pro_Minute$Instagram_Kommentare), 
      main ="Density plot Instagram-Kommentare über 120 Minuten", 
      xlab = "Vergangene Minuten", 
@@ -113,7 +112,6 @@ plot(density(Kommentare_pro_Minute$Twitter_Kommentare),
      xlab = "Vergangene Minuten", 
      ylab = "Anzahl Kommentare")
 
-# Stack Overflow befragt und einfache Lösung gefunden 
 plot(Kommentare_pro_Minute$Instagram_Kommentare, 
      type = "l", 
      main = "Kommentare pro Minute", 
