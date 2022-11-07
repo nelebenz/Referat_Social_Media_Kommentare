@@ -185,16 +185,15 @@ t.test(daten_t_test_laenge$Instagram_hard_news,
 boxplot(daten_t_test_laenge$Instagram_soft_news,
         daten_t_test_laenge$Twitter_soft_news,
         names = c("Instagram", "Twitter"),
-        col = c("red", "blue"),
         main = "Durchschnittliche Länge Kommentare soft news", 
         xlab = "Plattform", 
         ylab = "Länge Kommentare")
+
 
 # boxplot hard news 
 boxplot(daten_t_test_laenge$Instagram_hard_news,
         daten_t_test_laenge$Twitter_hard_news, 
         names = c("Instagram", "Twitter"),
-        col = c("red", "blue"),
         main = "Durchschnittliche Länge Kommentare hard news", 
         xlab = "Plattform",
         ylab = "Länge Kommentare")
