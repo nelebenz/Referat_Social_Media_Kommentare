@@ -1,0 +1,204 @@
+---
+title: "Dokumentation_Referat"
+author: "Nele Benz" 
+output: 
+  pdf_document: default
+  word_document: default
+  html_document: default
+date: '2022-10-29'
+---
+
+
+```{r} 
+
+# Kommentare scrapen 
+# Vorbereitung Kommentare scrapen 
+
+# packages installieren 
+install.packages("rvest")
+install.packages("Rcrawler")
+install.packages("plyr")
+install.packages("XML")
+
+# packages laden 
+library(rvest)
+library(Rcrawler)
+library(base)
+library(plyr)
+library(XML)
+
+# Scrapen an Beispiel-URL mit Methode 1 ausprobieren 
+
+# Zielseite in Variable abspeichern 
+scrape_url <- "https://www.instagram.com/p/CkQzNPpIeoJ/"
+# Funktion readLines liest die Zielseite und bildet den Text ab, Ergebnis wird in neuer Variable abgespeichert und mit der Funktion print abgebildet 
+flat_html <- readLines(scrape_url)
+print(flat_html)
+
+bsp_url <- "https://www.instagram.com/p/CkQzNPpIeoJ/"
+bsp_read <- readLines(bsp_url, encoding = "UTF-8") 
+parsed_bsp <- htmlParse(bsp_read, encoding = "UTF-8")
+show(parsed_bsp)
+
+# funktioniert nicht, könnte an Layout der Instagram- und Twitter-Kommentarspalten liegen, wahrscheinlich aber fehlender Schritt im Code oder fehlendes package 
+
+# Scrapen Methode 2 ausprobieren
+# Scrapen mit package rvest und Browser-Plugin SelectorGadget 
+
+# packages installieren und laden 
+install.packages("dplyr")
+install.packages("rvest")
+library(rvest)
+library(dplyr)
+
+# Zielseite in Variable abspeichern und mit Funktion read_html lesen lassen 
+instagram_bsp <- read_html("https://www.instagram.com/p/CkQfPu1AD1Q/")
+# Seite anhand der nodes, die SelectorGadget generiert hat, auf Kommentare durchsuchen und diese klassifizieren, dann abbilden lassen 
+instagram_bsp %>% 
+  html_nodes("._a6hd") %>% 
+  html_text()
+
+twitter_bsp <- read_html("https://twitter.com/tagesschau/status/1586301404062392320") 
+twitter_bsp %>% 
+  html_nodes(".r-13qz1uu") %>% 
+  html_text()
+
+twitter_bsp_2 <- read_html("https://twitter.com/tagesschau")
+twitter_bsp_2 %>%
+  html_nodes(".r-16y2uox .css-1dbjc4n") %>% 
+  html_text()
+
+website_bsp <- read_html("https://www.scrapingbee.com/blog/web-scraping-r/")
+website_bsp %>%
+  html_nodes(".mb-8p , .is-active-li") %>% 
+  html_text()
+
+website_bsp_2 <- read_html("https://meta.tagesschau.de/id/168052/die-fdp-und-die-ampel-die-last-des-regierens")
+website_bsp_2 %>% 
+  html_nodes("p") %>%
+  html_text()
+
+# learning: funktioniert nicht bei Social-Media, aber auf Nachrichtenseiten, die es ermöglichen, die Kommentare auf einer separaten Seite zu laden, liegt also vielleicht wirklich am Layout 
+# also Online-Scraper nutzen (ExportComments)
+
+```
+
+```{r}
+
+# Kommentar-Frequenz graphisch darstellen 
+# Vorbereitung der Daten in Excel und in R als data set importieren 
+
+#packages installieren und laden 
+install.packages("ggplot2")
+install.packages("gplots")
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(gplots)
+
+# Datenstruktur angucken 
+View(Kommentare_pro_Minute)
+summary(Kommentare_pro_Minute$Instagram_Kommentare)
+summary(Kommentare_pro_Minute$Twitter_Kommentare)
+
+# graphische Darstellungen ausprobieren 
+# density plots 
+plot(density(Kommentare_pro_Minute$Instagram_Kommentare), 
+     main ="Density plot Instagram-Kommentare über 120 Minuten", 
+     xlab = "Vergangene Minuten", 
+     ylab = "Anzahl Kommentare")
+
+plot(density(Kommentare_pro_Minute$Twitter_Kommentare), 
+     main ="Density plot Twitter-Kommentare über 120 Minuten", 
+     xlab = "Vergangene Minuten", 
+     ylab = "Anzahl Kommentare")
+
+# Stack Overflow befragt und einfache Lösung gefunden 
+plot(Kommentare_pro_Minute$Instagram_Kommentare, 
+     type = "l", 
+     main = "Kommentare pro Minute", 
+     xlab = "Vergangene Minuten", 
+     ylab = "Anzahl Kommentare")
+lines(Kommentare_pro_Minute$Twitter_Kommentare, col = "red")
+legend("topright", 
+       legend = c("Instagram", "Twitter"), 
+       fill = c("black", "red"))
+
+```
+
+```{r}
+
+# Vergleich Anzahl Kommentare soft und hard news 
+# Vorbereitung der Daten in Excel 
+# Matrix in R erstellen 
+
+# Datenstruktur angucken
+View(Anzahl_Kommentare) 
+summary(Anzahl_Kommentare)
+
+# Matrix erstellen 
+anzahl_kommentare_vergleich <- as.matrix(data.frame
+                                         (Instagram = c(2546, 1018),
+                                          Twitter = c(220, 166))) 
+rownames(anzahl_kommentare_vergleich) <- c("soft news", "hard news")
+print(anzahl_kommentare_vergleich)
+
+# barplot erstellen
+barplot(anzahl_kommentare_vergleich, 
+        main = "Vergleich soft und hard news", 
+        col = c("blue", "red"))
+legend("topright", 
+       legend = c("soft news", "hard news"), 
+       fill = c("blue", "red"))
+
+```
+
+```{r}
+
+# einfacher t-Test 
+# Vergleich Länge und Anzahl soft news und hard news 
+# Daten in Excel vorbereiten und importieren 
+
+# Datenstruktur angucken 
+View(daten_t_test_anzahl)
+View(daten_t_test_laenge)
+summary(daten_t_test_anzahl)
+summary(daten_t_test_laenge)
+
+t.test(daten_t_test_anzahl$Instagram, 
+       daten_t_test_anzahl$Twitter, 
+       paired = TRUE, 
+       alternative = "two.sided")
+
+t.test(daten_t_test_laenge$Instagram_soft_news, 
+       daten_t_test_laenge$Twitter_soft_news,
+       paired = TRUE, 
+       alternative = "two.sided") 
+
+t.test(daten_t_test_laenge$Instagram_hard_news,
+       daten_t_test_laenge$Twitter_hard_news, 
+       paired = TRUE, 
+       alternative = "two.sided")
+
+# Ergebnisse graphisch darstellen 
+# boxplot soft news 
+boxplot(daten_t_test_laenge$Instagram_soft_news,
+        daten_t_test_laenge$Twitter_soft_news,
+        names = c("Instagram", "Twitter"),
+        col = c("red", "blue"),
+        main = "Durchschnittliche Länge Kommentare soft news", 
+        xlab = "Plattform", 
+        ylab = "Länge Kommentare")
+
+# boxplot hard news 
+boxplot(daten_t_test_laenge$Instagram_hard_news,
+        daten_t_test_laenge$Twitter_hard_news, 
+        names = c("Instagram", "Twitter"),
+        col = c("red", "blue"),
+        main = "Durchschnittliche Länge Kommentare hard news", 
+        xlab = "Plattform",
+        ylab = "Länge Kommentare")
+
+```
+
+

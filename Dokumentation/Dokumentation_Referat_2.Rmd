@@ -1,0 +1,46 @@
+---
+title: "Dokumentation_Referat"
+output: html_document
+date: '2022-10-29'
+---
+
+```{r}
+# Vorbereitung 
+
+# packages installieren 
+
+install.packages("tidyr")
+install.packages("dplyr")
+install.packages("readr")
+install.packages("rvest")
+install.packages("Rcrawler")
+install.packages("XML")
+
+# packages laden 
+
+library("tidyr")
+library("dplyr")
+library("readr")
+library("rvest")
+library("Rcrawler")
+library("XML")
+
+twitter_bsp <- read_html("https://twitter.com/tagesschau/status/1586183194990317570")
+twitter_bsp %>% 
+  html_nodes(".r-qvutc0")%>% 
+  html_text()
+
+
+``` 
+
+
+```{r}
+
+
+
+
+
+
+
+
+``` 
