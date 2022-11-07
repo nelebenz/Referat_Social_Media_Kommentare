@@ -199,13 +199,6 @@ boxplot(daten_t_test_laenge$Instagram_hard_news,
         xlab = "Plattform",
         ylab = "Länge Kommentare")
 
-
-
-test
-test
-
-
-
 ```
 
 
