@@ -143,7 +143,9 @@ print(anzahl_kommentare_vergleich)
 
 # barplot erstellen
 barplot(anzahl_kommentare_vergleich, 
-        main = "Vergleich soft und hard news", 
+        main = "Vergleich soft und hard news",
+        xlab = "Plattform", 
+        ylab = "Anzahl Kommentare", 
         col = c("blue", "red"))
 legend("topright", 
        legend = c("soft news", "hard news"), 
@@ -185,7 +187,7 @@ boxplot(daten_t_test_laenge$Instagram_soft_news,
         names = c("Instagram", "Twitter"),
         main = "Durchschnittliche Länge Kommentare soft news", 
         xlab = "Plattform", 
-        ylab = "Länge Kommentare")
+        ylab = "Länge Kommentare in Wörtern")
 
 
 # boxplot hard news 
@@ -194,7 +196,7 @@ boxplot(daten_t_test_laenge$Instagram_hard_news,
         names = c("Instagram", "Twitter"),
         main = "Durchschnittliche Länge Kommentare hard news", 
         xlab = "Plattform",
-        ylab = "Länge Kommentare")
+        ylab = "Länge Kommentare in Wörtern")
 
 ```
 
