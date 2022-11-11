@@ -102,12 +102,14 @@ summary(Kommentare_pro_Minute$Instagram_Kommentare)
 summary(Kommentare_pro_Minute$Twitter_Kommentare)
 
 # graphische Darstellungen ausprobieren 
-plot(density(Kommentare_pro_Minute$Instagram_Kommentare), 
+plot(density(
+  Kommentare_pro_Minute$Instagram_Kommentare), 
      main ="Density plot Instagram-Kommentare über 120 Minuten", 
      xlab = "Vergangene Minuten", 
      ylab = "Anzahl Kommentare")
 
-plot(density(Kommentare_pro_Minute$Twitter_Kommentare), 
+plot(density(
+  Kommentare_pro_Minute$Twitter_Kommentare), 
      main ="Density plot Twitter-Kommentare über 120 Minuten", 
      xlab = "Vergangene Minuten", 
      ylab = "Anzahl Kommentare")
@@ -134,14 +136,15 @@ legend("topright",
 View(Anzahl_Kommentare) 
 summary(Anzahl_Kommentare)
 
-# Matrix erstellen 
-anzahl_kommentare_vergleich <- as.matrix(data.frame
-                                         (Instagram = c(2546, 1018),
-                                          Twitter = c(220, 166))) 
+# Matrix erstellen für stacked barplot 
+anzahl_kommentare_vergleich <- as.matrix(data.frame(
+  Instagram = c(2546, 1018), 
+  Twitter = c(220, 166))) 
 rownames(anzahl_kommentare_vergleich) <- c("soft news", "hard news")
-print(anzahl_kommentare_vergleich)
+print(anzahl_kommentare_vergleich) 
+summary(anzahl_kommentare_vergleich)
 
-# barplot erstellen
+# stacked barplot erstellen
 barplot(anzahl_kommentare_vergleich, 
         main = "Vergleich soft und hard news",
         xlab = "Plattform", 
@@ -165,44 +168,50 @@ View(daten_t_test_laenge)
 summary(daten_t_test_anzahl)
 summary(daten_t_test_laenge)
 
-t.test(daten_t_test_anzahl$Instagram, 
-       daten_t_test_anzahl$Twitter, 
+t.test(
+  daten_t_test_anzahl$Instagram, 
+  daten_t_test_anzahl$Twitter, 
        paired = TRUE, 
        alternative = "two.sided")
 
-t.test(daten_t_test_laenge$Instagram_soft_news, 
-       daten_t_test_laenge$Twitter_soft_news,
+t.test(
+  daten_t_test_laenge$Instagram_soft_news, 
+  daten_t_test_laenge$Twitter_soft_news,
        paired = TRUE, 
        alternative = "two.sided") 
 
-t.test(daten_t_test_laenge$Instagram_hard_news,
-       daten_t_test_laenge$Twitter_hard_news, 
+t.test(
+  daten_t_test_laenge$Instagram_hard_news,
+  daten_t_test_laenge$Twitter_hard_news, 
        paired = TRUE, 
        alternative = "two.sided") 
 
-t.test(daten_t_test_laenge$Instagram_soft_news, 
-       daten_t_test_laenge$Instagram_hard_news,
+t.test(
+  daten_t_test_laenge$Instagram_soft_news,
+  daten_t_test_laenge$Instagram_hard_news,
        paired = TRUE, 
        alternative = "two.sided") 
 
-t.test(daten_t_test_laenge$Twitter_soft_news, 
-       daten_t_test_laenge$Twitter_hard_news, 
+t.test(
+  daten_t_test_laenge$Twitter_soft_news, 
+  daten_t_test_laenge$Twitter_hard_news, 
        paired = TRUE, 
        alternative = "two.sided")
 
 # Ergebnisse graphisch darstellen 
 # boxplot soft news 
-boxplot(daten_t_test_laenge$Instagram_soft_news,
-        daten_t_test_laenge$Twitter_soft_news,
+boxplot(
+  daten_t_test_laenge$Instagram_soft_news,
+  daten_t_test_laenge$Twitter_soft_news,
         names = c("Instagram", "Twitter"),
         main = "Durchschnittliche Länge Kommentare soft news", 
         xlab = "Plattform", 
         ylab = "Länge Kommentare in Wörtern")
 
-
 # boxplot hard news 
-boxplot(daten_t_test_laenge$Instagram_hard_news,
-        daten_t_test_laenge$Twitter_hard_news, 
+boxplot(
+  daten_t_test_laenge$Instagram_hard_news,
+  daten_t_test_laenge$Twitter_hard_news, 
         names = c("Instagram", "Twitter"),
         main = "Durchschnittliche Länge Kommentare hard news", 
         xlab = "Plattform",
