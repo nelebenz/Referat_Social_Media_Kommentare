@@ -178,6 +178,16 @@ t.test(daten_t_test_laenge$Instagram_soft_news,
 t.test(daten_t_test_laenge$Instagram_hard_news,
        daten_t_test_laenge$Twitter_hard_news, 
        paired = TRUE, 
+       alternative = "two.sided") 
+
+t.test(daten_t_test_laenge$Instagram_soft_news, 
+       daten_t_test_laenge$Instagram_hard_news,
+       paired = TRUE, 
+       alternative = "two.sided") 
+
+t.test(daten_t_test_laenge$Twitter_soft_news, 
+       daten_t_test_laenge$Twitter_hard_news, 
+       paired = TRUE, 
        alternative = "two.sided")
 
 # Ergebnisse graphisch darstellen 
